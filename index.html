@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GitExplorer consulta perfiles y repositorios públicos mediante GitHub REST API.">
+  <title>GitExplorer | GitHub REST API</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Inicio de GitExplorer">
+      <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
+      <span>GitExplorer</span>
+    </a>
+    <span id="modeBadge" class="mode-badge">API pública</span>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero" aria-labelledby="mainTitle">
+      <p class="eyebrow">Aplicación académica · API de terceros</p>
+      <h1 id="mainTitle">Explora perfiles públicos de GitHub</h1>
+      <p class="hero-copy">Consulta información del usuario y sus repositorios mediante solicitudes HTTP a la GitHub REST API.</p>
+
+      <form id="searchForm" class="search-panel" novalidate>
+        <label for="username">Nombre de usuario</label>
+        <div class="search-row">
+          <input id="username" name="username" type="text" placeholder="Ejemplo: octocat" autocomplete="off" minlength="1" required>
+          <button id="searchButton" type="submit">
+            <span class="button-label">Buscar</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+        <p id="formHint" class="form-hint">La consulta usa datos públicos y no requiere iniciar sesión.</p>
+      </form>
+    </section>
+
+    <section id="requestPanel" class="request-panel hidden" aria-live="polite">
+      <div class="request-title">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <strong>Consumo de la API</strong>
+      </div>
+      <code id="requestUrl">GET https://api.github.com/users/usuario</code>
+      <div class="request-metrics">
+        <span id="httpStatus" class="status-pill">Pendiente</span>
+        <span id="responseTime">-- ms</span>
+        <span id="rateLimit">Límite: --</span>
+      </div>
+    </section>
+
+    <section id="message" class="message hidden" role="alert"></section>
+
+    <section id="results" class="results hidden" aria-live="polite">
+      <article class="profile-card">
+        <div class="avatar-wrap">
+          <img id="avatar" src="assets/avatar-fallback.svg" alt="Avatar del perfil consultado">
+        </div>
+        <div class="profile-main">
+          <div class="profile-heading">
+            <div>
+              <p id="login" class="profile-login">@usuario</p>
+              <h2 id="displayName">Nombre del usuario</h2>
+            </div>
+            <a id="profileLink" class="external-link" href="#" target="_blank" rel="noreferrer">Ver en GitHub ↗</a>
+          </div>
+          <p id="bio" class="bio">Sin biografía pública.</p>
+          <div class="profile-meta">
+            <span id="location">Ubicación no disponible</span>
+            <span id="company">Organización no disponible</span>
+            <span id="createdAt">Miembro desde --</span>
+          </div>
+        </div>
+      </article>
+
+      <div class="stats-grid" aria-label="Estadísticas del perfil">
+        <article class="stat-card"><span>Repositorios</span><strong id="repoCount">0</strong></article>
+        <article class="stat-card"><span>Seguidores</span><strong id="followers">0</strong></article>
+        <article class="stat-card"><span>Siguiendo</span><strong id="following">0</strong></article>
+        <article class="stat-card"><span>Gists públicos</span><strong id="gists">0</strong></article>
+      </div>
+
+      <section class="repos-section" aria-labelledby="reposTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Resultados procesados</p>
+            <h2 id="reposTitle">Repositorios recientes</h2>
+          </div>
+          <label class="filter-label" for="languageFilter">
+            Lenguaje
+            <select id="languageFilter">
+              <option value="all">Todos</option>
+            </select>
+          </label>
+        </div>
+        <div id="repoGrid" class="repo-grid"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p>Gabino Reyes García · Desarrollo Web Integral · GitHub REST API</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
